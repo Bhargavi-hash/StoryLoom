@@ -27,6 +27,7 @@
     height: 80%; /* Keep it within navbar height */
     max-height: 50px;
     object-fit: contain;
+    padding: 5px;
   }
 
   /* Left Section: Logo + Browse + Create */
@@ -34,6 +35,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    font-size: 1.2rem;
   }
   
   /* Middle Section: Search Bar */
@@ -46,15 +48,18 @@
   /* Right Section: Library + Profile */
   .nav-right {
     display: flex;
+    position: absolute;
+    left: 80%;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
+    font-size: 1.2rem;
   }
   
   /* Proper alignment of navigation links */
   .navbar-collapse {
     flex-grow: 1;
     display: flex;
-    justify-content: center; /* Center the rest of the navbar */
+    justify-content: center; /*Center the rest of the navbar*/
     align-items: center;
     width: 100%;
   }
@@ -62,7 +67,7 @@
   /* Search Bar Container */
 .navbar-search {
     flex-grow: 1;
-    max-width: 400px;
+    max-width: 700px;
     position: relative;
   }
   
@@ -88,13 +93,12 @@
   /* Right-side elements */
   .navbar .nav {
     position: absolute;
-    right: 20px;
     top: 50%;
     transform: translateY(-50%);
   }
   
   /* Responsive Fixes */
-  @media (max-width: 992px) {
+  @media (max-width: 1000px) {
     .navbar {
       flex-direction: column;
       height: auto;

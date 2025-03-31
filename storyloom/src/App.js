@@ -5,8 +5,10 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
 import StoryDetails from './pages/StoryDetails';
+import CreatePage from './pages/CreatePage';
 import Profile from './pages/Profile';
-import CreateStory from './pages/CreateStory';
+import CreateStory from './pages/CreateStory/CreateStory';
+// import CreateStory from './pages/CreateStory';
 import { AuthProvider } from './auth/AuthContext';
 
 
@@ -20,7 +22,8 @@ function App() {
           <Route path="/browse" element={<Browse />} />
           <Route path="/story/:id" element={<StoryDetails />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/create" element={<CreateStory />} />
+          <Route path="/create" element={<CreatePage />} />
+          <Route path="/create-story" element={<CreateStory />} />
         </Routes>
         <Footer />
       </Router>
