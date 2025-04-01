@@ -2,6 +2,7 @@ import StoryDetails from "./components/StoryDetails";
 import UploadImages from "./components/UploadCover";
 import GenreTags from "./components/GenreTags";
 import Warnings from "./components/WarningTags";
+import LanguageOptions from "./components/Language";
 import ContestParticipation from "./components/Contest";
 // import CharacterUploads from "./components/CharacterImageUpload";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +23,7 @@ function CreateStory() {
       <form onSubmit={handleSubmit}>
         <StoryDetails />
         <UploadImages />
+        <LanguageOptions />
         <GenreTags />
         <Warnings />
         <ContestParticipation />

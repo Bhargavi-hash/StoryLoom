@@ -1,6 +1,6 @@
-// src/pages/CreateStory/components/UploadImages.js
 import React, { useState } from "react";
-import "../../../styles/storyDetails.css";
+import { FaPlusCircle ,FaUpload } from "react-icons/fa";
+import "../../../styles/uploadimage.css";
 
 function UploadImages() {
   const [image, setImage] = useState(null);
@@ -14,12 +14,29 @@ function UploadImages() {
   };
 
   return (
-    <div className="story-details">
-      <label>Upload Cover Image:</label>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
-      {image && <img src={image} alt="Story Cover" className="preview-img" />}
+    <div className="upload-container">
+      <p>Book Cover:</p>
+      <label htmlFor="file-upload" className="upload-box">
+        {image ? (
+          <img src={image} alt="Story Cover" className="preview-img" />
+        ) : (
+          <div className="placeholder">
+            <FaPlusCircle className="plus-icon" />
+          </div>
+        )}
+      </label>
+      <input
+        id="file-upload"
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        hidden
+      />
+      <button className="upload-button" onClick={() => document.getElementById("file-upload").click()}>
+      <FaUpload className="button-icon" /> Upload
+      </button>
     </div>
   );
 }
 
-export default UploadImages; // Ensure default export
+export default UploadImages;

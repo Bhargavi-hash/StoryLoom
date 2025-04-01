@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 import '../styles/navbar.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaPenNib ,FaSearch } from 'react-icons/fa';
 import logo from '../assets/storyloom-navbar.png';
 import shortlogo from '../assets/storyloomlogo.png';
 import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
@@ -22,7 +22,7 @@ function NavbarComponent() {
           </Navbar.Brand>
           <Nav>
             <Link to="/browse" className="nav-link">Browse</Link>
-            {user && <Link to="/create" className="nav-link">Create</Link>}
+            {user && <Link to="/create" className="nav-link"><FaPenNib/> Create</Link>}
           </Nav>
         </div>
 
