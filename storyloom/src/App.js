@@ -11,6 +11,7 @@ import CreateStory from './pages/CreateStory/CreateStory';
 import UserProfile from './pages/UserProfile/userProfile';
 // import CreateStory from './pages/CreateStory';
 import { AuthProvider } from './auth/AuthContext';
+import Regsiter from './pages/Registration';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />  {/* ✅ Use 'element' instead of 'component' */}
           <Route path="/browse" element={<Browse />} />
           <Route path="/story/:id" element={<StoryDetails />} />
+          <Route path="/register" element={<Regsiter />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="/create-story" element={<CreateStory />} />

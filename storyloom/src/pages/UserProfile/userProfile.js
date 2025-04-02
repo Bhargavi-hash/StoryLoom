@@ -1,40 +1,46 @@
-import React, { useState } from "react";
-import ProfileHeader from "./components/ProfileHeader";
-import ProfileTabs from "./components/ProfileTabs";
-import BooksSection from "./components/BooksSection";
-import PostsSection from "./components/PostsSection";
-import "../../styles/UserProfile.css";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const UserProfile = () => {
-  const [activeTab, setActiveTab] = useState("books");
+function Profile() {
+  const { username } = useParams();
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
 
-  const user = {
-    profilePicture: "https://via.placeholder.com/150",
-    username: "JohnDoe",
-    country: "United States",
-    bio: "Aspiring writer with a passion for fantasy and sci-fi. Exploring new worlds one word at a time.",
-    books: [
-      { title: "The Lost Kingdom", cover: "https://via.placeholder.com/100" },
-      { title: "Space Chronicles", cover: "https://via.placeholder.com/100" },
-    ],
-    posts: [
-      { id: 1, content: "Excited to release my new book soon!" },
-      { id: 2, content: "Just finished a great fantasy novel. Any recommendations?" },
-    ],
-  };
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        console.log("Fetching user:", username);
+        const response = await fetch(`http://localhost:5000/api/auth/profile/${username}`);
+        console.log("Response status:", response.status);
+
+        if (!response.ok) {
+          throw new Error("User not found");
+        }
+
+        const data = await response.json();
+        console.log("Fetched user data:", data);
+
+        setUser(data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError(err.message);
+      }
+    };
+
+    fetchUserProfile();
+  }, [username]);
+
+  if (error) return <p>{error}</p>;
+  if (!user) return <p>Loading...</p>;
 
   return (
-    <div className="user-profile">
-      <ProfileHeader user={user} />
-      <hr />
-      <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      <div className="tab-content">
-        {activeTab === "books" && <BooksSection books={user.books} />}
-        {activeTab === "posts" && <PostsSection posts={user.posts} />}
-      </div>
+    <div>
+      <h1>{user.username}</h1>
+      <p>{user.bio}</p>
+      <p>Country: {user.country}</p>
+      {/* <img src={user.profilePic} alt="Profile" /> */}
     </div>
   );
-};
+}
 
-export default UserProfile;
+export default Profile;

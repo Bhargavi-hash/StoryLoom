@@ -1,0 +1,1 @@
+mongodb+srv://bhargavikurukunda:<db_password>@storyloomdb0.u3xza6f.mongodb.net/?retryWrites=true&w=majority&appName=StoryloomDB0
