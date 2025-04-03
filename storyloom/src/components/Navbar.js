@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 import '../styles/navbar.css';
-import { FaBook, FaCompass, FaPenNib, FaSearch } from 'react-icons/fa';
+import { FaCompass, FaPenNib, FaSearch } from 'react-icons/fa';
 import logo from '../assets/storyloom-navbar.png';
 import shortlogo from '../assets/storyloomlogo.png';
 import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
@@ -36,14 +36,16 @@ function NavbarComponent() {
           </Form>
         </div>
 
-        {/* Right Section: Library + Profile */}
+        {/* Right Section: Login OR Library + Profile */}
         <div className="nav-right">
           <Nav>
-            {user && <Link to="/library" className="nav-link"><FaBook /> Library</Link>}
-            {user ? (
-              <Link to={`/profile/${user.username}`} className="nav-link">Profile</Link>
-            ) : (
+            {!user ? (
               <Link to="/login" className="nav-link">Login</Link>
+            ) : (
+              <>
+                <Link to="/library" className="nav-link">Library</Link>
+                <Link to={`/profile/${user.username}`} className="nav-link">Profile</Link>
+              </>
             )}
           </Nav>
         </div>

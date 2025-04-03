@@ -1,46 +1,54 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/AuthContext";
 
-function Profile() {
-  const { username } = useParams();
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState("");
+const Profile = () => {
+  const { username } = useParams(); // Get username from URL
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchUser = async () => {
       try {
-        console.log("Fetching user:", username);
         const response = await fetch(`http://localhost:5000/api/auth/profile/${username}`);
-        console.log("Response status:", response.status);
-
-        if (!response.ok) {
-          throw new Error("User not found");
-        }
+        if (!response.ok) throw new Error("User not found");
 
         const data = await response.json();
-        console.log("Fetched user data:", data);
-
-        setUser(data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(err.message);
+        setProfileData(data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchUserProfile();
+    fetchUser();
   }, [username]);
 
-  if (error) return <p>{error}</p>;
-  if (!user) return <p>Loading...</p>;
+  const handleLogout = () => {
+    logout(); // Call logout function
+    navigate("/login"); // Redirect to login page
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!profileData) return <p>User not found</p>;
 
   return (
     <div>
-      <h1>{user.username}</h1>
-      <p>{user.bio}</p>
-      <p>Country: {user.country}</p>
-      {/* <img src={user.profilePic} alt="Profile" /> */}
+      <h2>{profileData.username}'s Profile</h2>
+      <p>Country: {profileData.country}</p>
+      <p>Bio: {profileData.bio}</p>
+      {/* <img src={profileData.profilePic} alt="Profile" /> */}
+
+      {user && user.username === profileData.username && (
+        <button onClick={handleLogout}>
+          Logout
+        </button>
+      )}
     </div>
   );
-}
+};
 
 export default Profile;

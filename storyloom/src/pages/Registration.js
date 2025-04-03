@@ -23,6 +23,8 @@ function Register() {
     const data = await response.json();
     if (response.ok) {
       alert("User registered successfully!");
+      // Redirect to the login page
+      window.location.href = "/login"; // Adjust the path as needed
     } else {
       alert(data.message || "Registration failed");
     }

@@ -8,10 +8,11 @@ import StoryDetails from './pages/StoryDetails';
 import CreatePage from './pages/CreatePage';
 // import Profile from './pages/Profile';
 import CreateStory from './pages/CreateStory/CreateStory';
-import UserProfile from './pages/UserProfile/userProfile';
+import Profile from './pages/UserProfile/userProfile';
 // import CreateStory from './pages/CreateStory';
 import { AuthProvider } from './auth/AuthContext';
 import Regsiter from './pages/Registration';
+import Login from './pages/Login';
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
           <Route path="/browse" element={<Browse />} />
           <Route path="/story/:id" element={<StoryDetails />} />
           <Route path="/register" element={<Regsiter />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:username" element={<Profile />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="/create-story" element={<CreateStory />} />
         </Routes>
