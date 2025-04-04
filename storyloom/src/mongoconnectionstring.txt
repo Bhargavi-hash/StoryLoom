@@ -1,1 +1,5 @@
 mongodb+srv://bhargavikurukunda:<db_password>@storyloomdb0.u3xza6f.mongodb.net/?retryWrites=true&w=majority&appName=StoryloomDB0
+
+curl -X POST http://localhost:5000/api/users/add-to-library \
+-H "Content-Type: application/json" \
+-d '{"userId": "67ef1d84c60f1d576fd0d43b", "bookId": "67ef2922e61d8cc213c30853"}'

@@ -38,8 +38,14 @@ const Profile = () => {
   return (
     <div>
       <h2>{profileData.username}'s Profile</h2>
+      <p>User Type: {profileData.usertype}</p>
       <p>Country: {profileData.country}</p>
       <p>Bio: {profileData.bio}</p>
+      <p>Books: {profileData.books.length}</p>
+      <p>Posts: {profileData.posts.length}</p>
+      <p>Followers: {profileData.followers.length}</p>
+      <p>Following: {profileData.following.length}</p>
+
       {/* <img src={profileData.profilePic} alt="Profile" /> */}
 
       {user && user.username === profileData.username && (
