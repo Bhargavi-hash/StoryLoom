@@ -72,6 +72,10 @@ router.post("/create-book", async (req, res) => {
     });
 
     await newBook.save();
+
+    // Update the user's books array
+    await User.findByIdAndUpdate(authorId, { $push: { books: newBook._id } });
+
     res.status(201).json({ message: "Book created successfully", book: newBook });
   } catch (error) {
     console.error("Error creating book:", error);
