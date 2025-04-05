@@ -36,6 +36,10 @@ router.get("/profile/:username", async (req, res) => {
         console.log("User not found in database");
         return res.status(404).json({ message: "User not found" });
       }
+
+      // Check if the user has books and posts
+      user.books = user.books.filter(book => book !== null);  
+      user.posts = user.posts.filter(post => post !== null);
   
       console.log("Sending user data:", user);
       res.status(200).json(user);
@@ -46,3 +50,4 @@ router.get("/profile/:username", async (req, res) => {
   });
 
 module.exports = router;
+

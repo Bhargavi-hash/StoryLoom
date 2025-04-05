@@ -1,8 +1,8 @@
-function Warnings({contentWarnings, setWarning}) {
+function Warnings({warnings, setWarnings}) {
     return (
       <div className="story-details">
         <label>Content Warnings:</label>
-        <input type="text" placeholder="Violence, Strong Language, Mature Themes..." value={contentWarnings} onchange={(e) => setWarning(e.target.value)} />
+        <input type="text" placeholder="Violence, Strong Language, Mature Themes..." value={warnings} onChange={(e) => setWarnings(e.target.value)} />
       </div>
     );
   }

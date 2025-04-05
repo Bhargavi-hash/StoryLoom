@@ -22,15 +22,19 @@ function CreateStory() {
   const [coverImage, setCoverImage] = useState("");
   const [contest, setContest] = useState(false);
 
-
-
   const navigate = useNavigate();
+
+  const getUserIdFromUsername = async (username) => {
+    const response = await fetch(`http://localhost:5000/api/auth/profile/${username}`);
+    const user = await response.json();
+    console.log(user);
+    return user._id; // Assuming the user object has an _id property
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Fetch userId through apicall to get the logged-in user
-
+    const username = localStorage.getItem("username");
+    const authorId = await getUserIdFromUsername(username);
 
     const newBook = {
       title,
@@ -42,7 +46,7 @@ function CreateStory() {
       warnings,
       coverImage,
       contest,
-      // authorId: userId,
+      authorId,
     };
 
     try {

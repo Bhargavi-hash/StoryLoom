@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         setUser(data); // Store user data in context
-        localStorage.setItem('user', JSON.stringify(data)); // Store in local storage
+        localStorage.setItem('username', data.username); // Store in local storage
       } else {
         console.error('Login failed:', data.message);
       }
@@ -31,12 +31,18 @@ export const AuthProvider = ({ children }) => {
 
   // Check local storage for user session on page reload
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    try {
+      const storedUsername = localStorage.getItem("username");
+      console.log("Retrieved username from localStorage:", storedUsername);
+  
+      if (storedUsername) {
+        login(storedUsername);
+      }
+    } catch (err) {
+      console.error("🔥 Error in useEffect:", err);
     }
   }, []);
-
+  
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
