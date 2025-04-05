@@ -5,10 +5,12 @@ const { TfiAgenda } = require("react-icons/tfi");
 
 const BookSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  abbreviation: { type: String, required: true },
   authorId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   description: { type: String },
   genre: { type: String },
   tags: [{ type: String }],
+  contentWarnings: [{ type: String }],
   contest: { type: mongoose.Schema.Types.ObjectId, ref: "Contest" },
   cover: { type: String },
   chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chapter" }],

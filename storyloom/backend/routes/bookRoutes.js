@@ -26,19 +26,58 @@ router.post("/add", async (req, res) => {
 
 // GET all books or by genre
 router.get('/', async (req, res) => {
-    try {
-      const genreFilter = req.query.genre; // e.g. /api/books?genre=Fantasy
-  
-      const query = genreFilter ? { genre: genreFilter } : {};
-      
-      
-  
-      const books = await Book.find(query).populate('authorId', 'username');
-  
-      res.status(200).json(books);
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to fetch books', error });
-    }
-  });
+  try {
+    const genreFilter = req.query.genre; // e.g. /api/books?genre=Fantasy
+
+    const query = genreFilter ? { genre: genreFilter } : {};
+
+
+
+    const books = await Book.find(query).populate('authorId', 'username');
+
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch books', error });
+  }
+});
+
+router.post("/create-book", async (req, res) => {
+  try {
+    const {
+      title,
+      abbreviation,
+      description,
+      genre,
+      tags,
+      language,
+      warnings,
+      coverImage,
+      contestParticipation,
+      authorId,
+    } = req.body;
+
+    const newBook = new Book({
+      title,
+      abbreviation,
+      description,
+      genre,
+      tags,
+      language,
+      warnings,
+      coverImage,
+      contestParticipation,
+      authorId,
+      chapters: [], // Initially empty
+      LibraryAdditions: 0,
+    });
+
+    await newBook.save();
+    res.status(201).json({ message: "Book created successfully", book: newBook });
+  } catch (error) {
+    console.error("Error creating book:", error);
+    res.status(500).json({ message: "Failed to create book", error: error.message });
+  }
+});
+
 
 module.exports = router;

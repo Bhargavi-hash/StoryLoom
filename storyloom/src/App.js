@@ -14,6 +14,7 @@ import Profile from './pages/UserProfile/userProfile';
 import { AuthProvider } from './auth/AuthContext';
 import Regsiter from './pages/Registration';
 import Login from './pages/Login';
+import MyStories from './pages/MyStories/MyStories';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/create" element={<CreatePage />} />
+          <Route path="/my-stories" element={<MyStories />} />
           <Route path="/create-story" element={<CreateStory />} />
         </Routes>
         <Footer />

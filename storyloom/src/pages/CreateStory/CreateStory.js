@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import StoryDetails from "./components/StoryDetails";
 import UploadImages from "./components/UploadCover";
 import GenreTags from "./components/GenreTags";
@@ -9,26 +11,77 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/CreateStory.css";
 
 function CreateStory() {
+
+  const [title, setTitle] = useState("");
+  const [abbreviation, setAbbreviation] = useState("");
+  const [description, setDescription] = useState("");
+  const [genre, setGenre] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [language, setLanguage] = useState("");
+  const [warnings, setWarnings] = useState([]);
+  const [coverImage, setCoverImage] = useState("");
+  const [contest, setContest] = useState(false);
+
+
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Story Created Successfully");
-    navigate("/my-stories"); // Redirect after submission
+
+    // Fetch userId through apicall to get the logged-in user
+
+
+    const newBook = {
+      title,
+      abbreviation,
+      description,
+      genre,
+      tags,
+      language,
+      warnings,
+      coverImage,
+      contest,
+      // authorId: userId,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/books/create-book", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBook),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create book");
+      }
+
+      const data = await response.json();
+      console.log("📚 Book created successfully:", data);
+
+      navigate("/my-stories");
+    } catch (error) {
+      console.error("❌ Error creating book:", error.message);
+      alert("Something went wrong while creating the book. Check the console.");
+    }
   };
 
   return (
     <div className="create-story-container">
       {/* <h2>📖 Create a New Story</h2> */}
       <form onSubmit={handleSubmit}>
-        <StoryDetails />
-        <UploadImages />
-        <LanguageOptions />
-        <GenreTags />
-        <Warnings />
-        <ContestParticipation />
+        <StoryDetails title={title} setTitle={setTitle} abbreviation={abbreviation} setAbbreviation={setAbbreviation} description={description} setDescription={setDescription} />
+        <UploadImages coverImage={coverImage} setCoverImage={setCoverImage} />
+        <LanguageOptions language={language} setLanguage={setLanguage} />
+        <GenreTags genre={genre} setGenre={setGenre} tags={tags} setTags={setTags} />
+        <Warnings warnings={warnings} setWarnings={setWarnings} />
+        <ContestParticipation contest={contest} setContest={setContest} />
+
         {/* <CharacterUploads /> */}
-        
+
         <button type="submit" className="submit-btn">Create</button>
         {/* <button type="button" className="cancel-btn" onClick={() => navigate("/dashboard")}>Cancel</button> */}
       </form>
@@ -37,3 +90,4 @@ function CreateStory() {
 }
 
 export default CreateStory;
+

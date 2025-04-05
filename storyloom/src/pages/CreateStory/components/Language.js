@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 const languages = [
     "English", "Spanish", "French", "German", "Chinese", "Hindi", "Arabic", "Portuguese", "Russian", "Japanese",
     "Korean", "Italian", "Turkish", "Dutch", "Swedish", "Polish", "Ukrainian", "Hebrew", "Thai", "Vietnamese",
     "Indonesian", "Persian", "Tamil", "Bengali", "Telugu", "Malay", "Marathi", "Urdu", "Greek", "Czech", "Hungarian"
 ];
 
-function LanguageOptions() {
-    const [selectedLanguage, setSelectedLanguage] = useState("");
+function LanguageOptions({language, setLanguage}) {
+    // const [selectedLanguage, setSelectedLanguage] = useState("");
     return (
         <div className="story-details">
             <label htmlFor="language">Language:</label>
             <select
                 id="language"
-                value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value)}
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
                 className="dropdown"
             >
                 <option value="" disabled>Select a language</option>
