@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Browse from './pages/Browse';
 import StoryDetails from './pages/StoryDetails';
 import CreatePage from './pages/CreatePage';
+import Library from './pages/Library';
 // import Profile from './pages/Profile';
 import CreateStory from './pages/CreateStory/CreateStory';
 import Profile from './pages/UserProfile/userProfile';
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />  {/* ✅ Use 'element' instead of 'component' */}
           <Route path="/browse" element={<Browse />} />
+          <Route path="/library" element={<Library />} />
           <Route path="/story/:id" element={<StoryDetails />} />
           <Route path="/register" element={<Regsiter />} />
           <Route path="/login" element={<Login />} />
