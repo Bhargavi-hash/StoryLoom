@@ -45,6 +45,7 @@ router.post("/create-book", async (req, res) => {
   try {
     const {
       title,
+      published,
       abbreviation,
       description,
       genre,
@@ -58,6 +59,7 @@ router.post("/create-book", async (req, res) => {
 
     const newBook = new Book({
       title,
+      published: false, // <- Always start the new book as a draft
       abbreviation,
       description,
       genre,
@@ -82,6 +84,20 @@ router.post("/create-book", async (req, res) => {
     res.status(500).json({ message: "Failed to create book", error: error.message });
   }
 });
+
+router.put("/:bookId/publish", async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      { published: true },
+      { new: true }
+    );
+    res.status(200).json(book);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to publish book." });
+  }
+});
+
 
 
 module.exports = router;

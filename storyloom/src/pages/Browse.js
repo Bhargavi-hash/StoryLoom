@@ -15,7 +15,8 @@ function Browse() {
       if (!response.ok) throw new Error("Failed to fetch stories");
 
       const data = await response.json();
-      setStories(data);
+      const books = data.filter((book) => book.published === true);
+      setStories(books || []);
     } catch (error) {
       console.error("Error fetching stories:", error);
     }

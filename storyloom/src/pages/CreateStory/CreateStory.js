@@ -13,6 +13,7 @@ import "../../styles/CreateStory.css";
 function CreateStory() {
 
   const [title, setTitle] = useState("");
+  const [published, setPublished] = useState(false);
   const [abbreviation, setAbbreviation] = useState("");
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState([]);
@@ -38,6 +39,7 @@ function CreateStory() {
 
     const newBook = {
       title,
+      published,
       abbreviation,
       description,
       genre,
