@@ -6,6 +6,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
+const chapterRoutes = require("./routes/chapterRoutes");
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/chapters", chapterRoutes);
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))

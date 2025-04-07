@@ -99,5 +99,16 @@ router.put("/:bookId/publish", async (req, res) => {
 });
 
 
+router.get('/:bookId', async (req, res) => {
+  try {
+    console.log('Looking for book:', req.params.bookId); // Add this
+    const book = await Book.findById(req.params.bookId).populate('chapters');
+    if (!book) return res.status(404).json({ error: 'Book not found' });
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = router;

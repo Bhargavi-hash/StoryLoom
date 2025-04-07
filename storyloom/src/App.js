@@ -15,6 +15,8 @@ import { AuthProvider } from './auth/AuthContext';
 import Regsiter from './pages/Registration';
 import Login from './pages/Login';
 import MyStories from './pages/MyStories/MyStories';
+import CreateChapter from './pages/CreateChapter/CreateChapter';
+import BookDetailsWithChapters from './pages/BookDetailsPage/BookDetailsWithChapters';
 
 
 function App() {
@@ -33,6 +35,12 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/my-stories" element={<MyStories />} />
           <Route path="/create-story" element={<CreateStory />} />
+          <Route path="/books/:id" element={<BookDetailsWithChapters />} />
+          <Route path="/books/:id/create-chapter" element={<CreateChapter />} />
+
+
+          {/* Wildcard fallback route to prevent blank screen disasters*/}
+          <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
         <Footer />
       </Router>

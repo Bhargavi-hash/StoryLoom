@@ -16,30 +16,6 @@ function MyStories() {
     }
   };
 
-  // 🚀 Handle the publish action
-  const handlePublish = async (bookId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/books/${bookId}/publish`, {
-        method: "PUT", // ✅ Make sure this matches your backend route
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to publish the story");
-      }
-
-      const data = await response.json();
-      console.log("✅ Story published successfully:", data);
-
-      // ⏳ Refresh the story list to show updated publish status
-      fetchMyStories();
-    } catch (error) {
-      console.error("🛑 Failed to publish the story:", error);
-    }
-  };
-
   useEffect(() => {
     fetchMyStories();
   }, []);
@@ -53,13 +29,11 @@ function MyStories() {
         {books.length > 0 ? (
           books.map((book) => (
             <div className="story-card" key={book._id}>
-              📖 {book.title}
+              <Link to={`/books/${book._id}`} className="story-link">
+                📖 {book.title}
+              </Link>
               {" "}
               ({book.published ? "Published" : "Unpublished"})
-
-              {!book.published && (
-                <button onClick={() => handlePublish(book._id)}>🚀 Publish</button>
-              )}
             </div>
           ))
         ) : (
