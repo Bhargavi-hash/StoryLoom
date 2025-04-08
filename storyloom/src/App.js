@@ -16,6 +16,7 @@ import Regsiter from './pages/Registration';
 import Login from './pages/Login';
 import MyStories from './pages/MyStories/MyStories';
 import CreateChapter from './pages/CreateChapter/CreateChapter';
+import EditChapter from './pages/EditChapter/EditChapter';
 import BookDetailsWithChapters from './pages/BookDetailsPage/BookDetailsWithChapters';
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/create-story" element={<CreateStory />} />
           <Route path="/books/:id" element={<BookDetailsWithChapters />} />
           <Route path="/books/:id/create-chapter" element={<CreateChapter />} />
+          <Route path="/edit-chapter/:id" element={<EditChapter />} />
 
 
           {/* Wildcard fallback route to prevent blank screen disasters*/}

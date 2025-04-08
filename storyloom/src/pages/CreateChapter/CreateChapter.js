@@ -6,17 +6,17 @@ function CreateChapter() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [status, setStatus] = useState('draft');
+  const [published, setPublished] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(`http://localhost:5000/api/chapters`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ bookId, title, content, status }),
+      body: JSON.stringify({ bookId, title, content, published }),
     });
     const data = await res.json();
-    navigate(`/books/${bookId}`);
+    navigate(-1); // Go back to the previous page
   };
 
   return (
@@ -25,7 +25,9 @@ function CreateChapter() {
       <form onSubmit={handleSubmit}>
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" className="form-control mb-2" />
         <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Content" rows={10} className="form-control mb-2" />
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="form-control mb-2">
+        <select
+          value={published ? "published" : "draft"}
+          onChange={(e) => setPublished(e.target.value === "published" )} className="form-control mb-2">
           <option value="draft">Save as Draft</option>
           <option value="published">Publish</option>
         </select>

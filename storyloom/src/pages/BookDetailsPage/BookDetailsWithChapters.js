@@ -49,7 +49,10 @@ function BookDetailWithChapters() {
         <Card key={chapter._id} className="mb-2">
           <Card.Body>
             <Card.Title>{chapter.title}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Status: {chapter.status}</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">
+              {/* Last created or updated date with the pusblish stauts of the chapter */}
+              {new Date(chapter.createdAt).toLocaleDateString()} - {chapter.published ? 'Published' : 'Draft'}
+            </Card.Subtitle>
             <Link to={`/edit-chapter/${chapter._id}`}>
               <Button variant="primary">Edit</Button>
             </Link>

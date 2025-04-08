@@ -9,13 +9,18 @@ router.post('/', async (req, res) => {
     const chapter = new Chapter(req.body);
     await chapter.save();
 
+    // Add the chapter to the book
     await Book.findByIdAndUpdate(chapter.bookId, {
       $push: { chapters: chapter._id },
     });
 
-    // If it's the first published chapter, mark the book as published
-    if (chapter.status === 'published') {
-      const publishedCount = await Chapter.countDocuments({ bookId: chapter.bookId, status: 'published' });
+    // If this is the first published chapter, publish the book too
+    if (chapter.published === true) {
+      const publishedCount = await Chapter.countDocuments({
+        bookId: chapter.bookId,
+        published: true,
+      });
+
       if (publishedCount === 1) {
         await Book.findByIdAndUpdate(chapter.bookId, { published: true });
       }
@@ -40,8 +45,26 @@ router.get('/:chapterId', async (req, res) => {
 // Update chapter
 router.put('/:id', async (req, res) => {
   try {
-    const updated = await Chapter.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updated);
+    const oldChapter = await Chapter.findById(req.params.id);
+    const updatedChapter = await Chapter.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    // If the chapter just changed from unpublished to published
+    if (!oldChapter.published && req.body.published === true) {
+      const publishedCount = await Chapter.countDocuments({
+        bookId: updatedChapter.bookId,
+        published: true,
+      });
+
+      if (publishedCount === 1) {
+        await Book.findByIdAndUpdate(updatedChapter.bookId, { published: true });
+      }
+    }
+
+    res.json(updatedChapter);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
