@@ -51,6 +51,7 @@ function BookDetailWithChapters() {
             <Card.Title>{chapter.title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               {/* Last created or updated date with the pusblish stauts of the chapter */}
+              {/* TIme - date format */}
               {new Date(chapter.createdAt).toLocaleDateString()} - {chapter.published ? 'Published' : 'Draft'}
             </Card.Subtitle>
             <Link to={`/edit-chapter/${chapter._id}`}>

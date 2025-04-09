@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
 import StoryDetails from './pages/StoryDetails';
+import ChapterReader from './pages/ChapterReader';
 import CreatePage from './pages/CreatePage';
 import Library from './pages/Library';
 // import Profile from './pages/Profile';
@@ -18,7 +19,7 @@ import MyStories from './pages/MyStories/MyStories';
 import CreateChapter from './pages/CreateChapter/CreateChapter';
 import EditChapter from './pages/EditChapter/EditChapter';
 import BookDetailsWithChapters from './pages/BookDetailsPage/BookDetailsWithChapters';
-
+import BookLandingPage from './pages/BookLandingPage';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route path="/" element={<Home />} />  {/* ✅ Use 'element' instead of 'component' */}
           <Route path="/browse" element={<Browse />} />
           <Route path="/library" element={<Library />} />
-          <Route path="/story/:id" element={<StoryDetails />} />
+          {/* <Route path="/story/:id" element={<StoryDetails />} /> */}
           <Route path="/register" element={<Regsiter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:username" element={<Profile />} />
@@ -39,7 +40,8 @@ function App() {
           <Route path="/books/:id" element={<BookDetailsWithChapters />} />
           <Route path="/books/:id/create-chapter" element={<CreateChapter />} />
           <Route path="/edit-chapter/:id" element={<EditChapter />} />
-
+          <Route path="/story/:id" element={<BookLandingPage />} /> {/* This is where the user lands after clicking a book */}
+          <Route path="/read/:bookId/:chapterId" element={<ChapterReader />} />
 
           {/* Wildcard fallback route to prevent blank screen disasters*/}
           <Route path="*" element={<h1>404 Not Found</h1>} />
