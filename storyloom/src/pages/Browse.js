@@ -73,11 +73,11 @@ function Browse() {
         prev.map((story) =>
           story._id === bookId
             ? {
-                ...story,
-                LibraryAdditions: isInLibrary
-                  ? (story.LibraryAdditions || 1) - 1
-                  : (story.LibraryAdditions || 0) + 1,
-              }
+              ...story,
+              LibraryAdditions: isInLibrary
+                ? (story.LibraryAdditions || 1) - 1
+                : (story.LibraryAdditions || 0) + 1,
+            }
             : story
         )
       );
@@ -109,6 +109,10 @@ function Browse() {
                   <Card.Text>{story.description}</Card.Text>
                   <Card.Subtitle className="text-muted">Genre: {story.genre}</Card.Subtitle>
                   <Card.Subtitle className="text-muted">Author: {story.authorId?.username || "Unknown"}</Card.Subtitle>
+                  <Card.Subtitle className="text-muted">
+                    Status: {story.status || "Ongoing"}
+                  </Card.Subtitle>
+
                   <Card.Text>📌 Collections: {story.LibraryAdditions || 0}</Card.Text>
                   {user && (
                     <Button

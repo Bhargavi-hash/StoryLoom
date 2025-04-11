@@ -60,6 +60,7 @@ router.post("/create-book", async (req, res) => {
     const newBook = new Book({
       title,
       published: false, // <- Always start the new book as a draft
+      status: "Ongoing", // Default status
       abbreviation,
       description,
       genre,
@@ -109,6 +110,25 @@ router.get('/:bookId', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedBook) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(updatedBook);
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 
 module.exports = router;

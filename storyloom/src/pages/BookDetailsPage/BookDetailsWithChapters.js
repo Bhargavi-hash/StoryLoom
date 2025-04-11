@@ -36,6 +36,11 @@ function BookDetailWithChapters() {
       <h2>{book.title}</h2>
       <p>{book.description}</p>
 
+      {/* Settings option to edit the book details */}
+      <Link to={`/edit-story/${bookId}`}>
+        <Button variant="primary">Edit Book</Button>
+      </Link>
+
       <div className="d-flex justify-content-between mb-3">
         <Link to={`/books/${bookId}/create-chapter`}>
           <Button variant="success">➕ Create New Chapter</Button>

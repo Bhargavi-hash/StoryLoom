@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 import StoryDetails from "./components/StoryDetails";
 import UploadImages from "./components/UploadCover";
@@ -7,11 +8,12 @@ import Warnings from "./components/WarningTags";
 import LanguageOptions from "./components/Language";
 import ContestParticipation from "./components/Contest";
 import StoryStatus from "./components/Status";
-// import CharacterUploads from "./components/CharacterImageUpload";
-import { useNavigate } from "react-router-dom";
+
 import "../../styles/CreateStory.css";
 
-function CreateStory() {
+function EditStory() {
+  const { id: bookId } = useParams();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(false);
@@ -25,24 +27,37 @@ function CreateStory() {
   const [contest, setContest] = useState(false);
   const [status, setStatus] = useState("Ongoing");
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchBookDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/books/${bookId}`);
+        const book = await response.json();
 
-  const getUserIdFromUsername = async (username) => {
-    const response = await fetch(`http://localhost:5000/api/auth/profile/${username}`);
-    const user = await response.json();
-    console.log(user);
-    return user._id; // Assuming the user object has an _id property
-  };
+        setTitle(book.title);
+        setPublished(book.published);
+        setAbbreviation(book.abbreviation);
+        setDescription(book.description);
+        setGenre(book.genre || []);
+        setTags(book.tags || []);
+        setLanguage(book.language);
+        setWarnings(book.warnings || []);
+        setCoverImage(book.coverImage);
+        setContest(book.contest);
+        setStatus(book.status || "Ongoing");
+      } catch (error) {
+        console.error("❌ Failed to load book details:", error);
+      }
+    };
 
-  const handleSubmit = async (e) => {
+    fetchBookDetails();
+  }, [bookId]);
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    const username = localStorage.getItem("username");
-    const authorId = await getUserIdFromUsername(username);
 
-    const newBook = {
+    const updatedBook = {
       title,
       published,
-      status,
       abbreviation,
       description,
       genre,
@@ -51,53 +66,48 @@ function CreateStory() {
       warnings,
       coverImage,
       contest,
-      authorId,
+      status,
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/books/create-book", {
-        method: "POST",
+      const response = await fetch(`http://localhost:5000/api/books/${bookId}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newBook),
+        body: JSON.stringify(updatedBook),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create book");
+        throw new Error(errorData.message || "Failed to update book");
       }
 
       const data = await response.json();
-      console.log("📚 Book created successfully:", data);
-
+      console.log("✅ Book updated successfully:", data);
       navigate("/my-stories");
     } catch (error) {
-      console.error("❌ Error creating book:", error.message);
-      alert("Something went wrong while creating the book. Check the console.");
+      console.error("❌ Error updating book:", error.message);
+      alert("Something went wrong while updating the book. Check the console.");
     }
   };
 
   return (
     <div className="create-story-container">
-      {/* <h2>📖 Create a New Story</h2> */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleUpdate}>
         <StoryDetails title={title} setTitle={setTitle} abbreviation={abbreviation} setAbbreviation={setAbbreviation} description={description} setDescription={setDescription} />
         <UploadImages coverImage={coverImage} setCoverImage={setCoverImage} />
         <LanguageOptions language={language} setLanguage={setLanguage} />
         <GenreTags genre={genre} setGenre={setGenre} tags={tags} setTags={setTags} />
         <Warnings warnings={warnings} setWarnings={setWarnings} />
         <ContestParticipation contest={contest} setContest={setContest} />
-        {/* <StoryStatus status={status} setStatus={setStatus} /> */}
+        <StoryStatus status={status} setStatus={setStatus} />
 
-        {/* <CharacterUploads /> */}
-
-        <button type="submit" className="submit-btn">Create</button>
-        {/* <button type="button" className="cancel-btn" onClick={() => navigate("/dashboard")}>Cancel</button> */}
+        <button type="submit" className="submit-btn">Update</button>
       </form>
     </div>
   );
 }
 
-export default CreateStory;
+export default EditStory;
 

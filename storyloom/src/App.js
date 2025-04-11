@@ -10,8 +10,8 @@ import CreatePage from './pages/CreatePage';
 import Library from './pages/Library';
 // import Profile from './pages/Profile';
 import CreateStory from './pages/CreateStory/CreateStory';
+import EditStory from './pages/CreateStory/EditStory';
 import Profile from './pages/UserProfile/userProfile';
-// import CreateStory from './pages/CreateStory';
 import { AuthProvider } from './auth/AuthContext';
 import Regsiter from './pages/Registration';
 import Login from './pages/Login';
@@ -37,6 +37,7 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/my-stories" element={<MyStories />} />
           <Route path="/create-story" element={<CreateStory />} />
+          <Route path="/edit-story/:id" element={<EditStory />} />
           <Route path="/books/:id" element={<BookDetailsWithChapters />} />
           <Route path="/books/:id/create-chapter" element={<CreateChapter />} />
           <Route path="/edit-chapter/:id" element={<EditChapter />} />

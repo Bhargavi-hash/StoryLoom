@@ -6,6 +6,7 @@ const { TfiAgenda } = require("react-icons/tfi");
 const BookSchema = new mongoose.Schema({
   title: { type: String, required: true },
   published: { type: Boolean, default: false },
+  status: { type: String, enum: ["Ongoing", "Completed", "On Hold"], default: "Ongoing" },
   abbreviation: { type: String, required: true },
   authorId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   description: { type: String },
